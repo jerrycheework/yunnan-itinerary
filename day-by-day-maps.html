@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day-by-Day Maps - Yunnan Travel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: #4834d4;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            z-index: 1000;
+        }
+        .day-selector {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .day-btn {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .day-btn:hover, .day-btn.active {
+            background: #4834d4;
+            transform: translateY(-2px);
+        }
+        .day-content {
+            display: none;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .day-content.active {
+            display: block;
+        }
+        .day-header {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            color: white;
+            padding: 20px;
+        }
+        .locations-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        .location-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid #ff6b6b;
+        }
+        .location-name {
+            font-weight: bold;
+            color: #2f3542;
+            margin-bottom: 8px;
+        }
+        .coordinates {
+            font-family: monospace;
+            color: #57606f;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        .copy-btn {
+            background: #2ed573;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+        .copy-btn:hover {
+            background: #26d668;
+        }
+        .tips {
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3d9ae8;
+        }
+        .map-placeholder {
+            height: 300px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            margin: 20px;
+            border: 2px dashed #ccc;
+        }
+        .interactive-map {
+            height: 400px;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .api-key-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .offline-instructions {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            color: #1565c0;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 8px;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @media (max-width: 768px) {
+            .locations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- Leaflet CSS for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS for OpenStreetMap -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Google Maps API -->
+    <script>
+        // Google Maps API key configured
+        const GOOGLE_MAPS_API_KEY = 'AIzaSyBMnqV9PwBm-0dJZQkIx1dUZcckXT_XE8w';
+        
+        function loadGoogleMaps() {
+            if (GOOGLE_MAPS_API_KEY === 'YOUR_API_KEY_HERE') {
+                console.warn('Google Maps API key not configured');
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMaps&libraries=geometry`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+        
+        // Map configurations for each day
+        const dayMaps = {
+            1: {
+                center: { lat: 25.0704, lng: 102.8332 },
+                zoom: 10,
+                markers: [
+                    { lat: 25.1019, lng: 102.9292, title: "Kunming Airport", icon: "🛬" },
+                    { lat: 25.0389, lng: 102.7183, title: "Hotel Area", icon: "🏨" }
+                ]
+            },
+            2: {
+                center: { lat: 25.0, lng: 102.8 },
+                zoom: 8,
+                markers: [
+                    { lat: 24.7797, lng: 103.2672, title: "Stone Forest", icon: "🗿" },
+                    { lat: 24.9537, lng: 102.6280, title: "Western Hills", icon: "⛰️" },
+                    { lat: 25.0389, lng: 102.7183, title: "Old Street", icon: "🏛️" }
+                ]
+            },
+            3: {
+                center: { lat: 25.3, lng: 101.5 },
+                zoom: 8,
+                markers: [
+                    { lat: 24.8825, lng: 102.7597, title: "Kunming South Station", icon: "🚄" },
+                    { lat: 25.6938, lng: 100.1542, title: "Dali Old Town", icon: "🏛️" },
+                    { lat: 25.6956, lng: 100.1764, title: "Longkan Pier", icon: "🌅" }
+                ]
+            },
+            4: {
+                center: { lat: 26.0, lng: 100.0 },
+                zoom: 8,
+                markers: [
+                    { lat: 25.8847, lng: 100.2669, title: "Shuanglang", icon: "🏘️" },
+                    { lat: 25.8500, lng: 100.2500, title: "Luwo Mountain", icon: "🏔️" },
+                    { lat: 25.7333, lng: 100.2167, title: "Xiaoputuo Island", icon: "🏝️" },
+                    { lat: 26.2833, lng: 99.8833, title: "Shaxi Ancient Town", icon: "🏛️" }
+                ]
+            },
+            5: {
+                center: { lat: 27.0, lng: 100.2 },
+                zoom: 10,
+                markers: [
+                    { lat: 27.1356, lng: 100.2075, title: "Jade Dragon Snow Mountain", icon: "🏔️" },
+                    { lat: 27.1167, lng: 100.2167, title: "Blue Moon Valley", icon: "💙" },
+                    { lat: 27.1300, lng: 100.2100, title: "Impression Theater", icon: "🎭" },
+                    { lat: 26.8721, lng: 100.2269, title: "Lijiang Old Town", icon: "🏛️" }
+                ]
+            },
+            6: {
+                center: { lat: 26.9, lng: 100.2 },
+                zoom: 10,
+                markers: [
+                    { lat: 26.9342, lng: 100.1667, title: "Lashihai Wetland", icon: "🦅" },
+                    { lat: 26.8833, lng: 100.2333, title: "Black Dragon Pool", icon: "🐉" },
+                    { lat: 26.9167, lng: 100.2167, title: "Shuhe Ancient Town", icon: "🏘️" },
+                    { lat: 26.8600, lng: 100.2400, title: "Eternal Love Theater", icon: "🎭" }
+                ]
+            },
+            7: {
+                center: { lat: 27.0, lng: 99.8 },
+                zoom: 8,
+                markers: [
+                    { lat: 26.8667, lng: 99.4167, title: "First Bend Yangtze", icon: "🌊" },
+                    { lat: 27.1894, lng: 100.1064, title: "Tiger Leaping Gorge", icon: "🏔️" },
+                    { lat: 27.8269, lng: 99.7064, title: "Dukezong Ancient Town", icon: "🏛️" },
+                    { lat: 27.8508, lng: 99.7128, title: "Songzanlin Monastery", icon: "🏯" }
+                ]
+            },
+            8: {
+                center: { lat: 27.8, lng: 99.8 },
+                zoom: 10,
+                markers: [
+                    { lat: 27.8447, lng: 99.9625, title: "Pudacuo National Park", icon: "🌲" },
+                    { lat: 27.8333, lng: 99.6167, title: "Napa Lake", icon: "🌾" },
+                    { lat: 27.8200, lng: 99.7000, title: "Tibetan Experience", icon: "🎭" }
+                ]
+            },
+            9: {
+                center: { lat: 26.4, lng: 101.3 },
+                zoom: 7,
+                markers: [
+                    { lat: 27.8000, lng: 99.7000, title: "Shangri-La", icon: "🚄" },
+                    { lat: 25.0389, lng: 102.7183, title: "Kunming", icon: "🚄" },
+                    { lat: 25.0433, lng: 102.7183, title: "Nanping Street", icon: "🛍️" }
+                ]
+            },
+            10: {
+                center: { lat: 25.0704, lng: 102.8332 },
+                zoom: 10,
+                markers: [
+                    { lat: 25.0556, lng: 102.6994, title: "Cuihu Park", icon: "🦢" },
+                    { lat: 25.0167, lng: 102.7167, title: "Trade City", icon: "🛒" },
+                    { lat: 25.1019, lng: 102.9292, title: "Airport", icon: "✈️" }
+                ]
+            }
+        };
+        
+        function initMaps() {
+            // Initialize maps for all days
+            Object.keys(dayMaps).forEach(day => {
+                initDayMap(day);
+            });
+        }
+        
+        function initDayMap(dayNumber) {
+            const mapContainer = document.getElementById(`map${dayNumber}`);
+            if (!mapContainer) return;
+            
+            const config = dayMaps[dayNumber];
+            const map = new google.maps.Map(mapContainer, {
+                zoom: config.zoom,
+                center: config.center,
+                styles: [
+                    {
+                        featureType: "poi",
+                        elementType: "labels",
+                        stylers: [{ visibility: "on" }]
+                    }
+                ]
+            });
+            
+            // Add markers
+            config.markers.forEach((markerConfig, index) => {
+                const marker = new google.maps.Marker({
+                    position: { lat: markerConfig.lat, lng: markerConfig.lng },
+                    map: map,
+                    title: markerConfig.title,
+                    label: {
+                        text: markerConfig.icon,
+                        fontSize: "18px"
+                    }
+                });
+                
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="padding: 10px;">
+                            <h3>${markerConfig.icon} ${markerConfig.title}</h3>
+                            <p>📍 ${markerConfig.lat.toFixed(4)}°, ${markerConfig.lng.toFixed(4)}°</p>
+                            <button onclick="copyToClipboard('${markerConfig.lat}, ${markerConfig.lng}')" 
+                                    style="background: #2ed573; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                                Copy GPS
+                            </button>
+                        </div>
+                    `
+                });
+                
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+            });
+            
+            // Add route if more than one marker
+            if (config.markers.length > 1) {
+                const path = config.markers.map(m => ({ lat: m.lat, lng: m.lng }));
+                const polyline = new google.maps.Polyline({
+                    path: path,
+                    geodesic: true,
+                    strokeColor: '#ff6b6b',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3
+                });
+                polyline.setMap(map);
+            }
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`Copied: ${text}`);
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert(`Copied: ${text}`);
+            });
+        }
+        
+        // OpenStreetMap Alternative (Free, no API key needed)
+        function enableOpenStreetMaps() {
+            // Hide the map options
+            document.querySelector('.api-key-notice').style.display = 'none';
+            
+            // Initialize OpenStreetMap for all days
+            Object.keys(dayMaps).forEach(day => {
+                initOpenStreetMap(day);
+            });
+            
+            // Show success message
+            showMapMessage('🌍 Free OpenStreetMaps enabled! All maps are now interactive.', '#2ed573');
+        }
+        
+        // Google Maps Premium
+        function enableGoogleMaps() {
+            // Hide the map options
+            document.querySelector('.api-key-notice').style.display = 'none';
+            
+            // Load Google Maps
+            loadGoogleMaps();
+            
+            // Show success message
+            showMapMessage('� Premium Google Maps enabled! Loading satellite imagery and enhanced features...', '#2196f3');
+        }
+        
+        function showMapMessage(message, color) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                background: ${color};
+                color: white;
+                padding: 15px;
+                margin: 20px;
+                border-radius: 8px;
+                text-align: center;
+                font-weight: bold;
+                animation: slideIn 0.5s ease-out;
+            `;
+            messageDiv.innerHTML = message;
+            
+            // Insert after header
+            const header = document.querySelector('.header');
+            header.parentNode.insertBefore(messageDiv, header.nextSibling);
+            
+            // Remove message after 3 seconds
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+        
+        function initOpenStreetMap(dayNumber) {
+            const mapContainer = document.getElementById(`map${dayNumber}`);
+            if (!mapContainer) return;
+            
+            // Clear any existing content
+            mapContainer.innerHTML = '';
+            
+            const config = dayMaps[dayNumber];
+            
+            // Create Leaflet map
+            const map = L.map(mapContainer).setView([config.center.lat, config.center.lng], config.zoom);
+            
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Add markers
+            const waypoints = [];
+            config.markers.forEach((markerConfig, index) => {
+                const marker = L.marker([markerConfig.lat, markerConfig.lng])
+                    .addTo(map)
+                    .bindPopup(`
+                        <div style="text-align: center; min-width: 200px;">
+                            <h3>${markerConfig.icon} ${markerConfig.title}</h3>
+                            <p>📍 ${markerConfig.lat.toFixed(4)}°, ${markerConfig.lng.toFixed(4)}°</p>
+                            <button onclick="copyToClipboard('${markerConfig.lat}, ${markerConfig.lng}')" 
+                                    style="background: #2ed573; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                                Copy GPS
+                            </button>
+                        </div>
+                    `);
+                
+                waypoints.push([markerConfig.lat, markerConfig.lng]);
+            });
+            
+            // Add route line if more than one marker
+            if (waypoints.length > 1) {
+                L.polyline(waypoints, {
+                    color: '#ff6b6b',
+                    weight: 3,
+                    opacity: 0.8
+                }).addTo(map);
+            }
+            
+            // Fit map to show all markers
+            if (waypoints.length > 0) {
+                const group = new L.featureGroup(map._layers);
+                if (Object.keys(group._layers).length > 0) {
+                    map.fitBounds(group.getBounds().pad(0.1));
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back to Overview</a>
+    
+    <div class="header">
+        <h1>📅 Day-by-Day Maps</h1>
+        <p>Detailed location guides for each day of your journey</p>
+    </div>
+    
+    <!-- Map Options -->
+    <div class="api-key-notice">
+        <h3>�️ Choose Your Map Type</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: center;">
+            <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; border: 2px solid #2ed573;">
+                <h4 style="color: #2ed573; margin-top: 0;">🌍 OpenStreetMap</h4>
+                <button onclick="enableOpenStreetMaps()" style="background: #2ed573; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: bold;">
+                    Use Free Maps
+                </button>
+                <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                    ✅ Completely free<br>
+                    ✅ No registration needed<br>
+                    ✅ Good worldwide coverage
+                </div>
+            </div>
+            <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; border: 2px solid #2196f3;">
+                <h4 style="color: #2196f3; margin-top: 0;">📍 Google Maps</h4>
+                <button onclick="enableGoogleMaps()" style="background: #2196f3; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: bold;">
+                    Use Premium Maps
+                </button>
+                <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                    ✅ Satellite imagery<br>
+                    ✅ Street View integration<br>
+                    ✅ Enhanced POI data
+                </div>
+            </div>
+        </div>
+        <p style="margin: 15px 0 0 0; font-size: 0.9em; color: #666;">Both options provide GPS coordinates for offline use</p>
+    </div>
+    
+    <!-- Offline Instructions -->
+    <div class="offline-instructions">
+        <h3>📱 Offline Maps Instructions</h3>
+        <p><strong>For offline use:</strong> Copy the GPS coordinates below and paste them into your offline map app (Maps.me, Google Maps offline, etc.)</p>
+    </div>
+    
+    <div class="day-selector">
+        <button class="day-btn active" onclick="showDay(1)">Day 1</button>
+        <button class="day-btn" onclick="showDay(2)">Day 2</button>
+        <button class="day-btn" onclick="showDay(3)">Day 3</button>
+        <button class="day-btn" onclick="showDay(4)">Day 4</button>
+        <button class="day-btn" onclick="showDay(5)">Day 5</button>
+        <button class="day-btn" onclick="showDay(6)">Day 6</button>
+        <button class="day-btn" onclick="showDay(7)">Day 7</button>
+        <button class="day-btn" onclick="showDay(8)">Day 8</button>
+        <button class="day-btn" onclick="showDay(9)">Day 9</button>
+        <button class="day-btn" onclick="showDay(10)">Day 10</button>
+    </div>
+
+    <!-- Day 1 -->
+    <div class="day-content active" id="day1">
+        <div class="day-header">
+            <h2>Day 1: Arrival in Kunming</h2>
+            <p>Airport pickup and hotel check-in</p>
+        </div>
+        <div id="map1" class="interactive-map"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <div class="location-name">🛬 Kunming Changshui International Airport</div>
+                <div class="coordinates">📍 25.1019° N, 102.9292° E</div>
+                <button class="copy-btn" onclick="copyText('25.1019, 102.9292')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Travel Tip:</strong> The airport is about 25km from city center. Take the metro line 6 or airport shuttle bus.
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏨 Kunming City Center (Hotel Area)</div>
+                <div class="coordinates">📍 25.0389° N, 102.7183° E</div>
+                <button class="copy-btn" onclick="copyText('25.0389, 102.7183')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Recommended Hotels:</strong> Green Lake area or Nanping Street for convenient access to attractions.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-content" id="day2">
+        <div class="day-header">
+            <h2>Day 2: Kunming Exploration</h2>
+            <p>Stone Forest and Western Hills adventure</p>
+        </div>
+        <div id="map2" class="interactive-map"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <div class="location-name">🗿 Stone Forest (Shilin)</div>
+                <div class="coordinates">📍 24.7797° N, 103.2672° E</div>
+                <button class="copy-btn" onclick="copyText('24.7797, 103.2672')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Distance:</strong> 80km from Kunming (1.5 hours drive)<br>
+                    <strong>UNESCO Site:</strong> Karst limestone formations, allow 4-5 hours for visit
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">⛰️ Western Hills (Xishan)</div>
+                <div class="coordinates">📍 24.9537° N, 102.6280° E</div>
+                <button class="copy-btn" onclick="copyText('24.9537, 102.6280')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Best Time:</strong> Late afternoon for sunset views<br>
+                    <strong>Cable Car:</strong> Available to Dragon Gate for panoramic views
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏛️ Kunming Old Street</div>
+                <div class="coordinates">📍 25.0389° N, 102.7183° E</div>
+                <button class="copy-btn" onclick="copyText('25.0389, 102.7183')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Evening Activity:</strong> Traditional architecture, local food, and shopping
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day-content" id="day3">
+        <div class="day-header">
+            <h2>Day 3: Kunming to Dali</h2>
+            <p>High-speed train journey and Dali exploration</p>
+        </div>
+        <div id="map3" class="interactive-map"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <div class="location-name">🚄 Kunming South Railway Station</div>
+                <div class="coordinates">📍 24.8825° N, 102.7597° E</div>
+                <button class="copy-btn" onclick="copyText('24.8825, 102.7597')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Train Duration:</strong> 2 hours to Dali<br>
+                    <strong>Tip:</strong> Book tickets in advance, especially during peak season
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏛️ Dali Old Town</div>
+                <div class="coordinates">📍 25.6938° N, 100.1542° E</div>
+                <button class="copy-btn" onclick="copyText('25.6938, 100.1542')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Historic Capital:</strong> Bai minority culture, ancient city walls<br>
+                    <strong>Walking Area:</strong> Car-free zone, perfect for exploration
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🌅 Longkan Pier (Erhai Lake)</div>
+                <div class="coordinates">📍 25.6956° N, 100.1764° E</div>
+                <button class="copy-btn" onclick="copyText('25.6956, 100.1764')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Best Time:</strong> Sunset viewing (around 7:30 PM in summer)<br>
+                    <strong>Activities:</strong> Lake cruise, photography, romantic atmosphere
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="day-content" id="day4">
+        <div class="day-header">
+            <h2>Day 4: Dali Full Day & Transfer to Lijiang</h2>
+            <p>Erhai Lake tour and ancient towns exploration</p>
+        </div>
+        <div id="map4" class="interactive-map"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <div class="location-name">🏘️ Shuanglang Ancient Town</div>
+                <div class="coordinates">📍 25.8847° N, 100.2669° E</div>
+                <button class="copy-btn" onclick="copyText('25.8847, 100.2669')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Highlight:</strong> Most scenic spot on Erhai Lake<br>
+                    <strong>Photography:</strong> Perfect Instagram spots with lake views
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏔️ Luwo Mountain</div>
+                <div class="coordinates">📍 25.8500° N, 100.2500° E</div>
+                <button class="copy-btn" onclick="copyText('25.8500, 100.2500')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Viewpoint:</strong> Panoramic views of Erhai Lake<br>
+                    <strong>Visit Time:</strong> 1-2 hours hiking
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏝️ Xiaoputuo Island</div>
+                <div class="coordinates">📍 25.7333° N, 100.2167° E</div>
+                <button class="copy-btn" onclick="copyText('25.7333, 100.2167')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Mini Island:</strong> Small Buddhist temple on lake<br>
+                    <strong>Access:</strong> Short boat ride from shore
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏛️ Shaxi Ancient Town</div>
+                <div class="coordinates">📍 26.2833° N, 99.8833° E</div>
+                <button class="copy-btn" onclick="copyText('26.2833, 99.8833')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Tea Horse Road:</strong> Historic trading post<br>
+                    <strong>UNESCO:</strong> Well-preserved ancient architecture
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="day-content" id="day5">
+        <div class="day-header">
+            <h2>Day 5: Lijiang Highlights</h2>
+            <p>Jade Dragon Snow Mountain and cultural shows</p>
+        </div>
+        <div id="map5" class="interactive-map"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <div class="location-name">🏔️ Jade Dragon Snow Mountain</div>
+                <div class="coordinates">📍 27.1356° N, 100.2075° E</div>
+                <button class="copy-btn" onclick="copyText('27.1356, 100.2075')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Altitude:</strong> Cable car to 4680m - bring warm clothes!<br>
+                    <strong>Tip:</strong> Buy oxygen canisters, go early to avoid crowds
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">💙 Blue Moon Valley</div>
+                <div class="coordinates">📍 27.1167° N, 100.2167° E</div>
+                <button class="copy-btn" onclick="copyText('27.1167, 100.2167')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Sacred Lakes:</strong> Crystal blue glacier-fed pools<br>
+                    <strong>Photography:</strong> Stunning turquoise water reflections
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🎭 Impression Lijiang Theater</div>
+                <div class="coordinates">📍 27.1300° N, 100.2100° E</div>
+                <button class="copy-btn" onclick="copyText('27.1300, 100.2100')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Show Times:</strong> Usually 7:30 PM and 9:00 PM<br>
+                    <strong>Unique:</strong> Outdoor performance with mountain backdrop
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏛️ Lijiang Old Town</div>
+                <div class="coordinates">📍 26.8721° N, 100.2269° E</div>
+                <button class="copy-btn" onclick="copyText('26.8721, 100.2269')">Copy GPS</button>
+                <div class="tips">
+                    <strong>UNESCO Site:</strong> Naxi minority culture<br>
+                    <strong>Evening:</strong> Beautiful when lit up at night
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 6 -->
+    <div class="day-content" id="day6">
+        <div class="day-header">
+            <h2>Day 6: Lijiang Cultural Day</h2>
+            <p>Wetlands, ancient towns, and evening entertainment</p>
+        </div>
+        <div id="map6" class="interactive-map"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <div class="location-name">🦅 Lashihai Wetland</div>
+                <div class="coordinates">📍 26.9342° N, 100.1667° E</div>
+                <button class="copy-btn" onclick="copyText('26.9342, 100.1667')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Activities:</strong> Birdwatching, horseback riding on Tea Horse Road<br>
+                    <strong>Best Season:</strong> Winter for migratory birds
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🐉 Black Dragon Pool Park</div>
+                <div class="coordinates">📍 26.8833° N, 100.2333° E</div>
+                <button class="copy-btn" onclick="copyText('26.8833, 100.2333')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Photography:</strong> Classic Jade Dragon Mountain reflection shots<br>
+                    <strong>Cultural:</strong> Dongba Culture Museum inside
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏘️ Shuhe Ancient Town</div>
+                <div class="coordinates">📍 26.9167° N, 100.2167° E</div>
+                <button class="copy-btn" onclick="copyText('26.9167, 100.2167')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Atmosphere:</strong> Quieter than Lijiang Old Town<br>
+                    <strong>Architecture:</strong> Traditional Naxi courtyard houses
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🎭 Lijiang Eternal Love Theater</div>
+                <div class="coordinates">📍 26.8600° N, 100.2400° E</div>
+                <button class="copy-btn" onclick="copyText('26.8600, 100.2400')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Show:</strong> Indoor spectacular about Lijiang history<br>
+                    <strong>Duration:</strong> 90 minutes with amazing stage effects
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 7 -->
+    <div class="day-content" id="day7">
+        <div class="day-header">
+            <h2>Day 7: Journey to Shangri-La</h2>
+            <p>Scenic drive with Yangtze River and Tiger Leaping Gorge</p>
+        </div>
+        <div id="map7" class="interactive-map"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <div class="location-name">🌊 First Bend of Yangtze River</div>
+                <div class="coordinates">📍 26.8667° N, 99.4167° E</div>
+                <button class="copy-btn" onclick="copyText('26.8667, 99.4167')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Scenic Stop:</strong> Famous U-turn of China's longest river<br>
+                    <strong>Photo Op:</strong> Best views from observation platform
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏔️ Tiger Leaping Gorge</div>
+                <div class="coordinates">📍 27.1894° N, 100.1064° E</div>
+                <button class="copy-btn" onclick="copyText('27.1894, 100.1064')">Copy GPS</button>
+                <div class="tips">
+                    <strong>World Famous:</strong> One of world's deepest gorges<br>
+                    <strong>Hiking:</strong> Upper trail accessible, lower trail for experienced hikers
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏛️ Dukezong Ancient Town</div>
+                <div class="coordinates">📍 27.8269° N, 99.7064° E</div>
+                <button class="copy-btn" onclick="copyText('27.8269, 99.7064')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Tibetan Culture:</strong> 1300-year-old town<br>
+                    <strong>Prayer Wheel:</strong> World's largest, requires 3+ people to turn
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🏯 Songzanlin Monastery</div>
+                <div class="coordinates">📍 27.8508° N, 99.7128° E</div>
+                <button class="copy-btn" onclick="copyText('27.8508, 99.7128')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Little Potala:</strong> Largest Tibetan monastery in Yunnan<br>
+                    <strong>Visit Time:</strong> Early morning for monk prayers (7-8 AM)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 8 -->
+    <div class="day-content" id="day8">
+        <div class="day-header">
+            <h2>Day 8: Shangri-La Nature</h2>
+            <p>National park and grasslands exploration</p>
+        </div>
+        <div id="map8" class="interactive-map"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <div class="location-name">🌲 Pudacuo National Park</div>
+                <div class="coordinates">📍 27.8447° N, 99.9625° E</div>
+                <button class="copy-btn" onclick="copyText('27.8447, 99.9625')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Pristine Nature:</strong> Highland lakes, virgin forests, meadows<br>
+                    <strong>Altitude:</strong> 3500-4100m, dress warmly and take it slow
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🌾 Napa Lake Grassland</div>
+                <div class="coordinates">📍 27.8333° N, 99.6167° E</div>
+                <button class="copy-btn" onclick="copyText('27.8333, 99.6167')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Seasonal Lake:</strong> Grassland in dry season, lake in wet season<br>
+                    <strong>Activities:</strong> Horseback riding, Black-necked crane watching
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🎭 Tibetan Cultural Experience</div>
+                <div class="coordinates">📍 27.8200° N, 99.7000° E</div>
+                <button class="copy-btn" onclick="copyText('27.8200, 99.7000')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Traditional Banquet:</strong> Yak meat, barley wine, butter tea<br>
+                    <strong>Entertainment:</strong> Traditional Tibetan song and dance performances
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 9 -->
+    <div class="day-content" id="day9">
+        <div class="day-header">
+            <h2>Day 9: Return to Kunming</h2>
+            <p>High-speed train back and city exploration</p>
+        </div>
+        <div id="map9" class="interactive-map"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <div class="location-name">🚄 Return Train Journey</div>
+                <div class="coordinates">📍 27.8000° N, 99.7000° E → 25.0389° N, 102.7183° E</div>
+                <button class="copy-btn" onclick="copyText('27.8000, 99.7000')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Duration:</strong> 4-5 hours high-speed train<br>
+                    <strong>Scenic:</strong> Beautiful mountain and valley views
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🛍️ Nanping Street</div>
+                <div class="coordinates">📍 25.0433° N, 102.7183° E</div>
+                <button class="copy-btn" onclick="copyText('25.0433, 102.7183')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Historic Shopping:</strong> Traditional pedestrian street<br>
+                    <strong>Souvenirs:</strong> Local crafts, tea, ethnic minority items
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 10 -->
+    <div class="day-content" id="day10">
+        <div class="day-header">
+            <h2>Day 10: Final Day & Departure</h2>
+            <p>Last-minute sightseeing and shopping before flight</p>
+        </div>
+        <div id="map10" class="interactive-map"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <div class="location-name">🦢 Cuihu Park (Green Lake)</div>
+                <div class="coordinates">📍 25.0556° N, 102.6994° E</div>
+                <button class="copy-btn" onclick="copyText('25.0556, 102.6994')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Winter Highlight:</strong> Thousands of Siberian seagulls (Nov-Mar)<br>
+                    <strong>Local Life:</strong> Morning exercises, tai chi, traditional music
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">🛒 Luosiwan International Trade City</div>
+                <div class="coordinates">📍 25.0167° N, 102.7167° E</div>
+                <button class="copy-btn" onclick="copyText('25.0167, 102.7167')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Wholesale Market:</strong> Largest in Southwest China<br>
+                    <strong>Shopping:</strong> Electronics, textiles, jade, tea at wholesale prices
+                </div>
+            </div>
+            <div class="location-card">
+                <div class="location-name">✈️ Departure Transfer</div>
+                <div class="coordinates">📍 25.1019° N, 102.9292° E</div>
+                <button class="copy-btn" onclick="copyText('25.1019, 102.9292')">Copy GPS</button>
+                <div class="tips">
+                    <strong>Airport Transfer:</strong> Allow 1 hour from city center<br>
+                    <strong>Check-in:</strong> Arrive 2-3 hours before international flight
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing & Inclusions Section -->
+    <div style="max-width: 1200px; margin: 40px auto 20px auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        <div style="background: linear-gradient(135deg, #2ed573, #26d668); color: white; padding: 20px; text-align: center;">
+            <h2>💰 Pricing & Inclusions</h2>
+            <p style="margin: 0;">Complete tour package details and what's covered</p>
+        </div>
+        
+        <div style="padding: 30px;">
+            <!-- Reference Price -->
+            <div style="background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; text-align: center;">
+                <h3 style="margin: 0 0 10px 0; font-size: 1.5em;">🏷️ Reference Price</h3>
+                <div style="font-size: 2em; font-weight: bold; margin: 10px 0;">RMB 5,350</div>
+                <div style="font-size: 1.1em; opacity: 0.9;">per adult (based on 9 people, 2-3 per room)</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; margin-bottom: 25px;">
+                <!-- Includes -->
+                <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; border-left: 4px solid #2ed573;">
+                    <h3 style="color: #2ed573; margin: 0 0 15px 0; display: flex; align-items: center;">
+                        ✅ Includes
+                    </h3>
+                    <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+                        <li><strong>Transportation:</strong> 17-seat coach, high-speed train tickets</li>
+                        <li><strong>Accommodation:</strong> 9 nights in specified/equivalent hotels</li>
+                        <li><strong>Guide:</strong> Professional Chinese-speaking guide</li>
+                        <li><strong>Tickets:</strong> Entrance fees, cable cars, show tickets per itinerary</li>
+                        <li><strong>Meals:</strong> Breakfasts at hotels</li>
+                        <li><strong>Insurance:</strong> Travel insurance coverage</li>
+                        <li><strong>Water:</strong> Daily bottled water</li>
+                    </ul>
+                </div>
+
+                <!-- Excludes -->
+                <div style="background: #fff5f5; padding: 20px; border-radius: 10px; border-left: 4px solid #ff6b6b;">
+                    <h3 style="color: #ff6b6b; margin: 0 0 15px 0; display: flex; align-items: center;">
+                        ❌ Excludes
+                    </h3>
+                    <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+                        <li><strong>Meals:</strong> Lunches and dinners (recommendations provided, self-pay)</li>
+                        <li><strong>Personal expenses:</strong> Shopping, souvenirs, etc.</li>
+                        <li><strong>Tips:</strong> Guide/driver tips (RMB 20 per person per day)</li>
+                        <li><strong>Force majeure:</strong> Weather, strikes, etc.</li>
+                        <li><strong>Personal losses:</strong> During free time or personal reasons</li>
+                    </ul>
+                </div>
+
+                <!-- Special Notes -->
+                <div style="background: #f0f8ff; padding: 20px; border-radius: 10px; border-left: 4px solid #4834d4;">
+                    <h3 style="color: #4834d4; margin: 0 0 15px 0; display: flex; align-items: center;">
+                        📋 Special Notes
+                    </h3>
+                    <ul style="margin: 0; padding-left: 20px; line-height: 1.6; font-size: 0.9em;">
+                        <li>Price for specified group size and dates; changes may affect price</li>
+                        <li>Not valid during holidays, exhibitions, or special events</li>
+                        <li>No shopping stops, no hidden sales</li>
+                        <li>Price does not include tax</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cost Breakdown -->
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 25px;">
+                <h3 style="color: #2f3542; margin: 0 0 15px 0; text-align: center;">💡 Quick Cost Calculation</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: center;">
+                    <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        <div style="font-size: 1.2em; font-weight: bold; color: #ff6b6b;">Total Package Cost</div>
+                        <div style="font-size: 1.5em; margin: 5px 0;">RMB 5,350</div>
+                        <div style="color: #666; font-size: 0.9em;">Base tour package</div>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        <div style="font-size: 1.2em; font-weight: bold; color: #2ed573;">Estimated Tips</div>
+                        <div style="font-size: 1.5em; margin: 5px 0;">RMB 200</div>
+                        <div style="color: #666; font-size: 0.9em;">10 days × RMB 20</div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 15px; padding: 10px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: 8px;">
+                    <strong>Budget for meals & personal expenses: RMB 1,000-2,000 additional</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDay(dayNumber) {
+            // Hide all day contents
+            const allDays = document.querySelectorAll('.day-content');
+            allDays.forEach(day => day.classList.remove('active'));
+            
+            // Hide all day buttons
+            const allBtns = document.querySelectorAll('.day-btn');
+            allBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected day
+            document.getElementById(`day${dayNumber}`).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`Copied: ${text}`);
+            }).catch(err => {
+                // Fallback for browsers that don't support clipboard API
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert(`Copied: ${text}`);
+            });
+        }
+        
+        // Initialize when page loads - let user choose map type
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Map options ready. Choose between OpenStreetMap (free) or Google Maps (premium).');
+            
+            // Add some hover effects to the option buttons
+            const buttons = document.querySelectorAll('button[onclick^="enable"]');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                });
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yunnan Province Travel Itinerary - Offline Maps</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            background: #f8f9fa;
+            gap: 10px;
+        }
+        .nav-btn {
+            padding: 12px 24px;
+            background: #4834d4;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .nav-btn:hover {
+            background: #3742fa;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .overview {
+            padding: 30px;
+        }
+        .day-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #ff6b6b;
+        }
+        .day-title {
+            color: #2f3542;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .locations {
+            color: #57606f;
+            line-height: 1.6;
+        }
+        .download-section {
+            background: #e8f4f8;
+            padding: 30px;
+            text-align: center;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #2ed573;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .download-btn:hover {
+            background: #26d668;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .tips {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .tips h3 {
+            color: #8b7500;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🇨🇳 Yunnan Province Adventure</h1>
+            <p>10-Day Complete Travel Guide with Offline Maps</p>
+            <p>Kunming → Dali → Lijiang → Shangri-La</p>
+        </div>
+        
+        <div class="nav">
+            <a href="complete-map.html" class="nav-btn">🗺️ Complete Route Map</a>
+            <a href="day-by-day-maps.html" class="nav-btn">📅 Day-by-Day Maps</a>
+            <a href="offline-guide.html" class="nav-btn">📱 Offline Guide</a>
+            <a href="transportation.html" class="nav-btn">🚄 Transportation</a>
+        </div>
+        
+        <div class="overview">
+            <h2>Your 10-Day Yunnan Itinerary Overview</h2>
+            
+            <div class="day-card">
+                <div class="day-title">Day 1: Arrival in Kunming</div>
+                <div class="locations">
+                    📍 Kunming Changshui International Airport<br>
+                    🏨 Hotel Check-in<br>
+                    🌃 Rest and prepare for adventure
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">Day 2: Kunming Exploration</div>
+                <div class="locations">
+                    🗿 Stone Forest (Shilin) - UNESCO World Heritage karst landscape<br>
+                    ⛰️ Western Hills (Xishan) - Scenic temples and Dianchi Lake views<br>
+                    🏛️ Kunming Old Street - Traditional architecture and culture
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">Day 3: Kunming to Dali</div>
+                <div class="locations">
+                    🚄 High-speed train to Dali<br>
+                    🏛️ Dali Old Town - Historic Bai culture capital<br>
+                    🌅 Longkan Pier sunset at Erhai Lake
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">Day 4: Dali & Transfer to Lijiang</div>
+                <div class="locations">
+                    🚗 Erhai Lake tour (convertible/Jeep)<br>
+                    🏘️ Shuanglang Ancient Town, Luwo Mountain, Xiaoputuo Island<br>
+                    🏛️ Shaxi Ancient Town (Tea Horse Road)<br>
+                    🚌 Transfer to Lijiang
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">Day 5: Lijiang Highlights</div>
+                <div class="locations">
+                    🏔️ Jade Dragon Snow Mountain (4680m cable car)<br>
+                    💙 Blue Moon Valley<br>
+                    🎭 Impression Lijiang show<br>
+                    🏛️ Lijiang Old Town (UNESCO site)
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">Day 6: Lijiang Cultural Day</div>
+                <div class="locations">
+                    🦅 Lashihai Wetland (birdwatching, horse riding)<br>
+                    🐉 Black Dragon Pool Park<br>
+                    🏘️ Shuhe Ancient Town<br>
+                    🎭 Lijiang Eternal Love show
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">Day 7: Journey to Shangri-La</div>
+                <div class="locations">
+                    🌊 First Bend of Yangtze River<br>
+                    🏔️ Tiger Leaping Gorge<br>
+                    🏛️ Dukezong Ancient Town (Tibetan culture)<br>
+                    🏯 Songzanlin Monastery
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">Day 8: Shangri-La Nature</div>
+                <div class="locations">
+                    🌲 Pudacuo National Park<br>
+                    🌾 Napa Lake Grassland<br>
+                    🎭 Traditional Tibetan banquet with performances
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">Day 9: Return to Kunming</div>
+                <div class="locations">
+                    🚄 High-speed train to Kunming<br>
+                    🛍️ Nanping Street shopping<br>
+                    🌃 Final evening in Kunming
+                </div>
+            </div>
+            
+            <div class="day-card">
+                <div class="day-title">Day 10: Departure</div>
+                <div class="locations">
+                    🦢 Cuihu Park (wintering seagulls)<br>
+                    🛒 Luosiwan International Trade City<br>
+                    ✈️ Airport transfer and departure
+                </div>
+            </div>
+        </div>
+        
+        <div class="tips">
+            <h3>💡 Offline Maps Tips</h3>
+            <ul>
+                <li>Download all maps to your device before traveling</li>
+                <li>Screenshots of key locations are included in each day's guide</li>
+                <li>GPS coordinates provided for all major attractions</li>
+                <li>Alternative route suggestions included</li>
+                <li>Emergency contact information in Chinese characters</li>
+            </ul>
+        </div>
+        
+        <div class="download-section">
+            <h2>📱 Get Your Offline Maps</h2>
+            <p>Download these resources before your trip for offline access</p>
+            <a href="complete-map.html" class="download-btn">🗺️ Complete Route Map</a>
+            <a href="offline-guide.html" class="download-btn">📖 Offline Travel Guide</a>
+            <a href="emergency-contacts.html" class="download-btn">🆘 Emergency Contacts</a>
+        </div>
+    </div>
+</body>
+</html>

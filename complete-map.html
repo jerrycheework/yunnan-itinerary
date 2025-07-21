@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Route Map - Yunnan Travel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .map-container {
+            height: 70vh;
+            margin: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px;
+            flex-wrap: wrap;
+        }
+        .control-btn {
+            padding: 10px 20px;
+            background: #4834d4;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .control-btn:hover {
+            background: #3742fa;
+            transform: translateY(-2px);
+        }
+        .legend {
+            background: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+        .coordinates {
+            background: #e8f4f8;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            z-index: 1000;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            .control-btn {
+                width: 80%;
+                margin: 5px 0;
+            }
+            .back-btn {
+                position: relative;
+                top: auto;
+                left: auto;
+                display: block;
+                margin: 10px auto;
+                text-align: center;
+                width: fit-content;
+            }
+            .map-container {
+                height: 50vh;
+                margin: 10px;
+            }
+        }
+    </style>
+    <!-- Leaflet CSS for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS for OpenStreetMap -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back to Overview</a>
+    
+    <div class="header">
+        <h1>🗺️ Complete Route Map</h1>
+        <p>Your entire 10-day journey through Yunnan Province</p>
+    </div>
+    
+    <!-- Map Options -->
+    <div style="background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; padding: 15px; margin: 20px; border-radius: 8px; text-align: center;">
+        <h3>🗺️ Choose Your Map Type</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: center;">
+            <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; border: 2px solid #2ed573;">
+                <h4 style="color: #2ed573; margin-top: 0;">🌍 OpenStreetMap</h4>
+                <button onclick="enableOpenStreetMap()" style="background: #2ed573; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: bold;">
+                    Use Free Maps
+                </button>
+                <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                    ✅ Completely free<br>
+                    ✅ No registration needed<br>
+                    ✅ Good worldwide coverage
+                </div>
+            </div>
+            <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; border: 2px solid #2196f3;">
+                <h4 style="color: #2196f3; margin-top: 0;">📍 Google Maps</h4>
+                <button onclick="enableGoogleMaps()" style="background: #2196f3; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: bold;">
+                    Use Premium Maps
+                </button>
+                <div style="margin-top: 10px; font-size: 0.9em; color: #666;">
+                    ✅ Satellite imagery<br>
+                    ✅ Street View integration<br>
+                    ✅ Enhanced POI data
+                </div>
+            </div>
+        </div>
+        <p style="margin: 15px 0 0 0; font-size: 0.9em; color: #666;">Both options provide GPS coordinates for offline use</p>
+    </div>
+    
+    <div class="controls">
+        <button class="control-btn" onclick="showFullRoute()">Show Full Route</button>
+        <button class="control-btn" onclick="showDayByDay()">Day by Day</button>
+        <button class="control-btn" onclick="showTransportation()">Transportation</button>
+        <button class="control-btn" onclick="downloadOfflineMap()">Download for Offline</button>
+    </div>
+    
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+    
+    <div class="legend">
+        <h3>Map Legend</h3>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff6b6b;"></div>
+            <span>Major Cities (Kunming, Dali, Lijiang, Shangri-La)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #4834d4;"></div>
+            <span>Tourist Attractions</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #2ed573;"></div>
+            <span>Transportation Hubs</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ffa502;"></div>
+            <span>Accommodation Areas</span>
+        </div>
+    </div>
+    
+    <div class="coordinates">
+        <h3>📍 Key Coordinates for Offline Use</h3>
+        <strong>Day 1-2: Kunming</strong><br>
+        • Kunming Changshui Airport: 25.1019° N, 102.9292° E<br>
+        • Stone Forest: 24.7797° N, 103.2672° E<br>
+        • Western Hills: 24.9537° N, 102.6280° E<br>
+        <br>
+        <strong>Day 3-4: Dali</strong><br>
+        • Dali Old Town: 25.6938° N, 100.1542° E<br>
+        • Erhai Lake: 25.7089° N, 100.2278° E<br>
+        • Shuanglang: 25.8847° N, 100.2669° E<br>
+        <br>
+        <strong>Day 5-6: Lijiang</strong><br>
+        • Lijiang Old Town: 26.8721° N, 100.2269° E<br>
+        • Jade Dragon Snow Mountain: 27.1356° N, 100.2075° E<br>
+        • Lashihai: 26.9342° N, 100.1667° E<br>
+        <br>
+        <strong>Day 7-8: Shangri-La</strong><br>
+        • Shangri-La City: 27.8269° N, 99.7064° E<br>
+        • Tiger Leaping Gorge: 27.1894° N, 100.1064° E<br>
+        • Songzanlin Monastery: 27.8508° N, 99.7128° E<br>
+        • Pudacuo National Park: 27.8447° N, 99.9625° E<br>
+    </div>
+
+    <script>
+        let map;
+        let markers = [];
+        let routePath;
+        let mapType = null; // 'google' or 'leaflet'
+
+        // All locations with coordinates
+        const locations = [
+            // Kunming
+            { name: "Kunming Changshui Airport", lat: 25.1019, lng: 102.9292, type: "transport", day: 1 },
+            { name: "Stone Forest (Shilin)", lat: 24.7797, lng: 103.2672, type: "attraction", day: 2 },
+            { name: "Western Hills", lat: 24.9537, lng: 102.6280, type: "attraction", day: 2 },
+            { name: "Kunming Old Street", lat: 25.0389, lng: 102.7183, type: "attraction", day: 2 },
+            
+            // Dali
+            { name: "Dali Old Town", lat: 25.6938, lng: 100.1542, type: "city", day: 3 },
+            { name: "Erhai Lake", lat: 25.7089, lng: 100.2278, type: "attraction", day: 3 },
+            { name: "Longkan Pier", lat: 25.6956, lng: 100.1764, type: "attraction", day: 3 },
+            { name: "Shuanglang Ancient Town", lat: 25.8847, lng: 100.2669, type: "attraction", day: 4 },
+            { name: "Xiaoputuo Island", lat: 25.7333, lng: 100.2167, type: "attraction", day: 4 },
+            { name: "Shaxi Ancient Town", lat: 26.2833, lng: 99.8833, type: "attraction", day: 4 },
+            
+            // Lijiang
+            { name: "Lijiang Old Town", lat: 26.8721, lng: 100.2269, type: "city", day: 5 },
+            { name: "Jade Dragon Snow Mountain", lat: 27.1356, lng: 100.2075, type: "attraction", day: 5 },
+            { name: "Blue Moon Valley", lat: 27.1167, lng: 100.2167, type: "attraction", day: 5 },
+            { name: "Lashihai Wetland", lat: 26.9342, lng: 100.1667, type: "attraction", day: 6 },
+            { name: "Black Dragon Pool", lat: 26.8833, lng: 100.2333, type: "attraction", day: 6 },
+            { name: "Shuhe Ancient Town", lat: 26.9167, lng: 100.2167, type: "attraction", day: 6 },
+            
+            // Shangri-La
+            { name: "First Bend of Yangtze River", lat: 26.8667, lng: 99.4167, type: "attraction", day: 7 },
+            { name: "Tiger Leaping Gorge", lat: 27.1894, lng: 100.1064, type: "attraction", day: 7 },
+            { name: "Dukezong Ancient Town", lat: 27.8269, lng: 99.7064, type: "city", day: 7 },
+            { name: "Songzanlin Monastery", lat: 27.8508, lng: 99.7128, type: "attraction", day: 7 },
+            { name: "Pudacuo National Park", lat: 27.8447, lng: 99.9625, type: "attraction", day: 8 },
+            { name: "Napa Lake", lat: 27.8333, lng: 99.6167, type: "attraction", day: 8 },
+            
+            // Final Kunming locations
+            { name: "Nanping Street", lat: 25.0433, lng: 102.7183, type: "attraction", day: 9 },
+            { name: "Cuihu Park", lat: 25.0556, lng: 102.6994, type: "attraction", day: 10 },
+            { name: "Luosiwan Trade City", lat: 25.0167, lng: 102.7167, type: "attraction", day: 10 }
+        ];
+
+        function enableOpenStreetMap() {
+            hideMapOptions();
+            mapType = 'leaflet';
+            initLeafletMap();
+            showMapMessage('🌍 Free OpenStreetMap enabled! Complete route map is now interactive.', '#2ed573');
+        }
+
+        function enableGoogleMaps() {
+            hideMapOptions();
+            mapType = 'google';
+            initGoogleMap();
+            showMapMessage('📍 Premium Google Maps enabled! Loading satellite imagery and enhanced features...', '#2196f3');
+        }
+
+        function hideMapOptions() {
+            const optionsDiv = document.querySelector('div[style*="background: #fff3cd"]');
+            if (optionsDiv) optionsDiv.style.display = 'none';
+        }
+
+        function showMapMessage(message, color) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                background: ${color};
+                color: white;
+                padding: 15px;
+                margin: 20px;
+                border-radius: 8px;
+                text-align: center;
+                font-weight: bold;
+                animation: slideIn 0.5s ease-out;
+            `;
+            messageDiv.innerHTML = message;
+            
+            const header = document.querySelector('.header');
+            header.parentNode.insertBefore(messageDiv, header.nextSibling);
+            
+            setTimeout(() => messageDiv.remove(), 3000);
+        }
+
+        function initLeafletMap() {
+            const mapContainer = document.getElementById('map');
+            mapContainer.innerHTML = '';
+            
+            map = L.map(mapContainer).setView([26.5, 100.5], 7);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            createLeafletMarkers();
+            showFullRouteLeaflet();
+        }
+
+        function createLeafletMarkers() {
+            markers = [];
+            const colorMap = {
+                'city': '#ff6b6b',
+                'attraction': '#4834d4', 
+                'transport': '#2ed573',
+                'hotel': '#ffa502'
+            };
+
+            locations.forEach((location, index) => {
+                const marker = L.circleMarker([location.lat, location.lng], {
+                    color: 'white',
+                    fillColor: colorMap[location.type] || '#666',
+                    fillOpacity: 1,
+                    radius: 8,
+                    weight: 2
+                }).addTo(map);
+
+                const popupContent = `
+                    <div style="text-align: center; min-width: 200px;">
+                        <h3>${location.name}</h3>
+                        <p><strong>Day ${location.day}</strong></p>
+                        <p>📍 ${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}</p>
+                        <p>Type: ${location.type}</p>
+                        <button onclick="copyCoordinates(${location.lat}, ${location.lng})" 
+                                style="background: #4834d4; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                            Copy Coordinates
+                        </button>
+                    </div>
+                `;
+                
+                marker.bindPopup(popupContent);
+                markers.push(marker);
+            });
+        }
+
+        function showFullRouteLeaflet() {
+            const routeCoordinates = locations.map(loc => [loc.lat, loc.lng]);
+            
+            routePath = L.polyline(routeCoordinates, {
+                color: '#ff6b6b',
+                weight: 3,
+                opacity: 0.8
+            }).addTo(map);
+            
+            // Fit map to show all markers
+            const group = new L.featureGroup(markers);
+            map.fitBounds(group.getBounds().pad(0.1));
+        }
+
+        // Google Maps functions (existing)
+        function initGoogleMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 7,
+                center: { lat: 26.5, lng: 100.5 },
+                mapTypeId: 'roadmap',
+                styles: [
+                    {
+                        featureType: 'poi',
+                        elementType: 'labels',
+                        stylers: [{ visibility: 'on' }]
+                    }
+                ]
+            });
+
+            createGoogleMarkers();
+            showFullRouteGoogle();
+        }
+
+        function createGoogleMarkers() {
+            markers = [];
+            locations.forEach((location, index) => {
+                const marker = new google.maps.Marker({
+                    position: { lat: location.lat, lng: location.lng },
+                    map: map,
+                    title: location.name,
+                    icon: getMarkerIcon(location.type),
+                    label: {
+                        text: String.fromCharCode(65 + index),
+                        color: 'white',
+                        fontWeight: 'bold'
+                    }
+                });
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="padding: 10px; max-width: 250px;">
+                            <h3 style="margin: 0 0 10px 0; color: #333;">${location.name}</h3>
+                            <p style="margin: 5px 0;"><strong>Day ${location.day}</strong></p>
+                            <p style="margin: 5px 0;">📍 ${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}</p>
+                            <p style="margin: 5px 0;">Type: ${location.type}</p>
+                            <button onclick="copyCoordinates(${location.lat}, ${location.lng})" 
+                                    style="background: #4834d4; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                                Copy Coordinates
+                            </button>
+                        </div>
+                    `
+                });
+
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+
+                markers.push(marker);
+            });
+        }
+
+        function getMarkerIcon(type) {
+            const colors = {
+                'city': '#ff6b6b',
+                'attraction': '#4834d4',
+                'transport': '#2ed573',
+                'hotel': '#ffa502'
+            };
+            
+            return {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: colors[type] || '#666',
+                fillOpacity: 1,
+                strokeColor: 'white',
+                strokeWeight: 2,
+                scale: 8
+            };
+        }
+
+        function showFullRouteGoogle() {
+            if (routePath) routePath.setMap(null);
+            
+            const routeCoordinates = locations.map(loc => ({ lat: loc.lat, lng: loc.lng }));
+            
+            routePath = new google.maps.Polyline({
+                path: routeCoordinates,
+                geodesic: true,
+                strokeColor: '#ff6b6b',
+                strokeOpacity: 1.0,
+                strokeWeight: 3
+            });
+            
+            routePath.setMap(map);
+            
+            const bounds = new google.maps.LatLngBounds();
+            locations.forEach(loc => bounds.extend({ lat: loc.lat, lng: loc.lng }));
+            map.fitBounds(bounds);
+        }
+
+        // Common functions
+        function showFullRoute() {
+            if (mapType === 'leaflet') {
+                showFullRouteLeaflet();
+            } else if (mapType === 'google') {
+                showFullRouteGoogle();
+            } else {
+                alert('Please select a map type first.');
+            }
+        }
+
+        function showDayByDay() {
+            alert('Day-by-day view - Check the day-by-day-maps.html for detailed daily maps with step-by-step navigation.');
+        }
+
+        function showTransportation() {
+            alert('Transportation routes:\n• Kunming → Dali (High-speed train, 2 hours)\n• Dali → Lijiang (Bus/Car, 2 hours)\n• Lijiang → Shangri-La (Bus/Car, 3 hours)\n• Shangri-La → Kunming (Flight, 1.5 hours)');
+        }
+
+        function downloadOfflineMap() {
+            alert('To download for offline use:\n\n1. Take screenshots of this map at different zoom levels\n2. Save the coordinates list below\n3. Download Google Maps offline areas on your phone\n4. Use Maps.me or similar apps with the GPS coordinates');
+        }
+
+        function copyCoordinates(lat, lng) {
+            navigator.clipboard.writeText(`${lat}, ${lng}`).then(() => {
+                alert('Coordinates copied to clipboard!');
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = `${lat}, ${lng}`;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Coordinates copied to clipboard!');
+            });
+        }
+    </script>
+    
+    <!-- Google Maps API with configured key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMnqV9PwBm-0dJZQkIx1dUZcckXT_XE8w" async defer></script>
+    
+    <script>
+        // Fallback if Google Maps doesn't load
+        setTimeout(() => {
+            if (typeof google === 'undefined') {
+                console.log('Google Maps API not loaded - using OpenStreetMap instead');
+                // Auto-enable OpenStreetMap if Google Maps fails to load
+                enableOpenStreetMap();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
