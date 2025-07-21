@@ -135,6 +135,173 @@
             background: #4834d4;
             color: white;
         }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+                margin-bottom: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .back-btn {
+                position: relative;
+                top: auto;
+                left: auto;
+                display: block;
+                width: fit-content;
+                margin: 10px auto 20px auto;
+            }
+            
+            .transport-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin: 15px 0;
+            }
+            
+            .transport-card {
+                padding: 20px 15px;
+                margin: 0 5px;
+            }
+            
+            .transport-icon {
+                font-size: 2.5em;
+                margin-bottom: 10px;
+            }
+            
+            .transport-title {
+                font-size: 1.3em;
+                margin-bottom: 10px;
+            }
+            
+            .route {
+                padding: 12px;
+                margin: 10px 0;
+            }
+            
+            .route-details {
+                font-size: 0.85em;
+            }
+            
+            .price, .duration {
+                display: block;
+                margin: 3px 0;
+                text-align: center;
+            }
+            
+            .booking-info, .tips {
+                padding: 12px;
+                margin: 10px 0;
+            }
+            
+            .booking-info h4, .tips h4 {
+                font-size: 1em;
+            }
+            
+            .schedule-table {
+                font-size: 0.75em;
+                overflow-x: auto;
+                display: block;
+                white-space: nowrap;
+            }
+            
+            .schedule-table thead,
+            .schedule-table tbody,
+            .schedule-table th,
+            .schedule-table td,
+            .schedule-table tr {
+                display: block;
+            }
+            
+            .schedule-table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            .schedule-table tr {
+                background: #f8f9fa;
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+                padding: 10px;
+                border-radius: 8px;
+            }
+            
+            .schedule-table td {
+                border: none;
+                position: relative;
+                padding: 8px 8px 8px 25%;
+                text-align: left;
+                white-space: normal;
+            }
+            
+            .schedule-table td:before {
+                content: attr(data-label) ": ";
+                position: absolute;
+                left: 6px;
+                width: 20%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+                color: #4834d4;
+            }
+            
+            .tips ul, .booking-info p {
+                font-size: 0.9em;
+            }
+            
+            .tips li {
+                margin: 5px 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 15px 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .header p {
+                font-size: 0.9em;
+            }
+            
+            .transport-card {
+                padding: 15px 10px;
+                margin: 0;
+            }
+            
+            .transport-icon {
+                font-size: 2em;
+            }
+            
+            .transport-title {
+                font-size: 1.2em;
+            }
+            
+            .route-header {
+                font-size: 0.95em;
+            }
+            
+            .schedule-table td {
+                padding: 6px 6px 6px 30%;
+                font-size: 0.8em;
+            }
+            
+            .schedule-table td:before {
+                width: 25%;
+                font-size: 0.75em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -305,28 +472,28 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Metro Line 6</td>
-                            <td>55 min</td>
-                            <td>¥10</td>
-                            <td>Cheapest, runs 6:30-22:30</td>
+                            <td data-label="Transport">Metro Line 6</td>
+                            <td data-label="Duration">55 min</td>
+                            <td data-label="Cost">¥10</td>
+                            <td data-label="Notes">Cheapest, runs 6:30-22:30</td>
                         </tr>
                         <tr>
-                            <td>Airport Shuttle</td>
-                            <td>45 min</td>
-                            <td>¥25</td>
-                            <td>To major hotels</td>
+                            <td data-label="Transport">Airport Shuttle</td>
+                            <td data-label="Duration">45 min</td>
+                            <td data-label="Cost">¥25</td>
+                            <td data-label="Notes">To major hotels</td>
                         </tr>
                         <tr>
-                            <td>Taxi</td>
-                            <td>45 min</td>
-                            <td>¥80-120</td>
-                            <td>Meter + airport surcharge</td>
+                            <td data-label="Transport">Taxi</td>
+                            <td data-label="Duration">45 min</td>
+                            <td data-label="Cost">¥80-120</td>
+                            <td data-label="Notes">Meter + airport surcharge</td>
                         </tr>
                         <tr>
-                            <td>DiDi</td>
-                            <td>45 min</td>
-                            <td>¥60-100</td>
-                            <td>Need Chinese phone number</td>
+                            <td data-label="Transport">DiDi</td>
+                            <td data-label="Duration">45 min</td>
+                            <td data-label="Cost">¥60-100</td>
+                            <td data-label="Notes">Need Chinese phone number</td>
                         </tr>
                     </tbody>
                 </table>
@@ -437,60 +604,60 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
-                        <td>Airport → Hotel</td>
-                        <td>Metro/Taxi</td>
-                        <td>45-60 min</td>
-                        <td>¥10-120</td>
-                        <td>No</td>
+                        <td data-label="Day">1</td>
+                        <td data-label="Route">Airport → Hotel</td>
+                        <td data-label="Transport">Metro/Taxi</td>
+                        <td data-label="Duration">45-60 min</td>
+                        <td data-label="Cost">¥10-120</td>
+                        <td data-label="Booking">No</td>
                     </tr>
                     <tr>
-                        <td>3</td>
-                        <td>Kunming → Dali</td>
-                        <td>High-speed train</td>
-                        <td>2 hours</td>
-                        <td>¥145-220</td>
-                        <td>Yes (advance)</td>
+                        <td data-label="Day">3</td>
+                        <td data-label="Route">Kunming → Dali</td>
+                        <td data-label="Transport">High-speed train</td>
+                        <td data-label="Duration">2 hours</td>
+                        <td data-label="Cost">¥145-220</td>
+                        <td data-label="Booking">Yes (advance)</td>
                     </tr>
                     <tr>
-                        <td>4</td>
-                        <td>Dali → Lijiang</td>
-                        <td>Private car/bus</td>
-                        <td>2.5-3 hours</td>
-                        <td>¥65-300</td>
-                        <td>Recommended</td>
+                        <td data-label="Day">4</td>
+                        <td data-label="Route">Dali → Lijiang</td>
+                        <td data-label="Transport">Private car/bus</td>
+                        <td data-label="Duration">2.5-3 hours</td>
+                        <td data-label="Cost">¥65-300</td>
+                        <td data-label="Booking">Recommended</td>
                     </tr>
                     <tr>
-                        <td>5</td>
-                        <td>Jade Dragon Mountain</td>
-                        <td>Cable car</td>
-                        <td>30 min up</td>
-                        <td>¥180-280</td>
-                        <td>Yes</td>
+                        <td data-label="Day">5</td>
+                        <td data-label="Route">Jade Dragon Mountain</td>
+                        <td data-label="Transport">Cable car</td>
+                        <td data-label="Duration">30 min up</td>
+                        <td data-label="Cost">¥180-280</td>
+                        <td data-label="Booking">Yes</td>
                     </tr>
                     <tr>
-                        <td>7</td>
-                        <td>Lijiang → Shangri-La</td>
-                        <td>Private car</td>
-                        <td>6-8 hours</td>
-                        <td>¥800-1200</td>
-                        <td>Yes</td>
+                        <td data-label="Day">7</td>
+                        <td data-label="Route">Lijiang → Shangri-La</td>
+                        <td data-label="Transport">Private car</td>
+                        <td data-label="Duration">6-8 hours</td>
+                        <td data-label="Cost">¥800-1200</td>
+                        <td data-label="Booking">Yes</td>
                     </tr>
                     <tr>
-                        <td>9</td>
-                        <td>Shangri-La → Kunming</td>
-                        <td>High-speed train</td>
-                        <td>4-5 hours</td>
-                        <td>¥280-450</td>
-                        <td>Yes (advance)</td>
+                        <td data-label="Day">9</td>
+                        <td data-label="Route">Shangri-La → Kunming</td>
+                        <td data-label="Transport">High-speed train</td>
+                        <td data-label="Duration">4-5 hours</td>
+                        <td data-label="Cost">¥280-450</td>
+                        <td data-label="Booking">Yes (advance)</td>
                     </tr>
                     <tr>
-                        <td>10</td>
-                        <td>Hotel → Airport</td>
-                        <td>Metro/Taxi</td>
-                        <td>45-60 min</td>
-                        <td>¥10-120</td>
-                        <td>No</td>
+                        <td data-label="Day">10</td>
+                        <td data-label="Route">Hotel → Airport</td>
+                        <td data-label="Transport">Metro/Taxi</td>
+                        <td data-label="Duration">45-60 min</td>
+                        <td data-label="Cost">¥10-120</td>
+                        <td data-label="Booking">No</td>
                     </tr>
                 </tbody>
             </table>
