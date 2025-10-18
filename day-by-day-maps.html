@@ -143,6 +143,29 @@
             margin: 20px;
             border-radius: 8px;
         }
+        .food-recommendations {
+            background: #fff9e6;
+            border-left: 4px solid #ffa500;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        .food-item {
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 5px;
+        }
+        .scenic-spot {
+            background: #e6f3ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        .camera-icon {
+            font-size: 1.2em;
+        }
         @keyframes slideIn {
             from {
                 transform: translateY(-50px);
@@ -510,6 +533,93 @@
         <p><strong>For offline use:</strong> Copy the GPS coordinates below and paste them into your offline map app (Maps.me, Google Maps offline, etc.)</p>
     </div>
     
+    <!-- Best Scenic Views Summary -->
+    <div style="max-width: 1200px; margin: 20px auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; text-align: center;">
+            <h2>📸 TOP 10 SCENIC VIEWPOINTS - DON'T MISS!</h2>
+            <p style="margin: 5px 0;">The most breathtaking photo spots on your Yunnan journey</p>
+        </div>
+        <div style="padding: 25px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: white; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-top: 0;">🥇 #1 Jade Dragon Snow Mountain</h3>
+                    <p style="margin: 5px 0;"><strong>Day 5</strong> - Glacier Park at 4,680m altitude</p>
+                    <p style="font-size: 0.9em;">BREATHTAKING snow peaks & Blue Moon Valley turquoise lakes. Best at sunrise!</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: white; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-top: 0;">🥈 #2 Tiger Leaping Gorge</h3>
+                    <p style="margin: 5px 0;"><strong>Day 7</strong> - One of world's deepest gorges</p>
+                    <p style="font-size: 0.9em;">DRAMATIC river canyon 3,900m deep! Epic landscape photography. 10 AM-2 PM best light</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #4834d4, #667eea); color: white; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-top: 0;">🥉 #3 Black Dragon Pool</h3>
+                    <p style="margin: 5px 0;"><strong>Day 6</strong> - Lijiang's iconic view</p>
+                    <p style="font-size: 0.9em;">Red pavilion with mountain reflection - THE classic Yunnan postcard shot! Early morning (7-9 AM)</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #4834d4, #667eea); color: white; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-top: 0;">🏆 #4 Songzanlin Monastery</h3>
+                    <p style="margin: 5px 0;"><strong>Day 7</strong> - Little Potala Palace</p>
+                    <p style="font-size: 0.9em;">Stunning monastery reflection in lake at sunrise (6:30 AM). Tibetan Buddhist majesty!</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #2ed573, #26d668); color: white; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-top: 0;">⭐ #5 Shuanglang (Erhai Lake)</h3>
+                    <p style="margin: 5px 0;"><strong>Day 4</strong> - Instagram paradise</p>
+                    <p style="font-size: 0.9em;">White tables, glass balls, lake views - most photogenic spot in Dali! Arrive early (8 AM)</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #2ed573, #26d668); color: white; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-top: 0;">⭐ #6 Pudacuo National Park</h3>
+                    <p style="margin: 5px 0;"><strong>Day 8</strong> - Alpine paradise</p>
+                    <p style="font-size: 0.9em;">Crystal lakes, virgin forest, wildlife. Shudu Lake at dawn = mirror reflections!</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #ffa502, #ff6348); color: white; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-top: 0;">📍 #7 Stone Forest</h3>
+                    <p style="margin: 5px 0;"><strong>Day 2</strong> - UNESCO wonder</p>
+                    <p style="font-size: 0.9em;">Unique limestone formations. Lion Pavilion for panoramic views. Golden hour magic!</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #ffa502, #ff6348); color: white; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-top: 0;">📍 #8 Western Hills Dragon Gate</h3>
+                    <p style="margin: 5px 0;"><strong>Day 2</strong> - Sunset over Dianchi Lake</p>
+                    <p style="font-size: 0.9em;">SPECTACULAR sunset views (5:30-6:30 PM). Cable car aerial shots included!</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #a29bfe, #6c5ce7); color: white; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-top: 0;">🌄 #9 Napa Lake Grassland</h3>
+                    <p style="margin: 5px 0;"><strong>Day 8</strong> - Tibetan plateau</p>
+                    <p style="font-size: 0.9em;">360° grassland views with prayer flags. Black-necked cranes in winter! Sunset gold!</p>
+                </div>
+                <div style="background: linear-gradient(135deg, #a29bfe, #6c5ce7); color: white; padding: 20px; border-radius: 10px;">
+                    <h3 style="margin-top: 0;">🌄 #10 Xiaoputuo Island</h3>
+                    <p style="margin: 5px 0;"><strong>Day 4</strong> - Erhai Lake gem</p>
+                    <p style="font-size: 0.9em;">Tiny temple island with perfect reflections. Early morning (6:30 AM) for mirror-like water!</p>
+                </div>
+            </div>
+            <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 10px; margin-top: 20px; text-align: center;">
+                <h3 style="color: #856404; margin-top: 0;">📷 Photography Pro Tips</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; color: #856404; text-align: left;">
+                    <div>
+                        <strong>🌅 Best Times:</strong><br>
+                        • Sunrise: 6:30-7:30 AM<br>
+                        • Golden Hour: 5:30-7:00 PM<br>
+                        • Blue Hour: 7:00-7:30 PM
+                    </div>
+                    <div>
+                        <strong>📸 Essential Gear:</strong><br>
+                        • Wide-angle lens (16-35mm)<br>
+                        • Polarizing filter<br>
+                        • Tripod for long exposures<br>
+                        • Extra batteries (cold drains them!)
+                    </div>
+                    <div>
+                        <strong>⚠️ Important Notes:</strong><br>
+                        • High altitude = clear but cold<br>
+                        • Weather changes fast<br>
+                        • Arrive early to avoid crowds<br>
+                        • Respect local customs/monks
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="day-selector">
         <button class="day-btn active" onclick="showDay(1)">Day 1</button>
         <button class="day-btn" onclick="showDay(2)">Day 2</button>
@@ -548,6 +658,24 @@
                 </div>
             </div>
         </div>
+        
+        <div class="food-recommendations">
+            <h3 style="margin-top: 0;">🍜 Must-Try Foods in Kunming</h3>
+            <div class="food-item">
+                <strong>Crossing Bridge Noodles (过桥米线)</strong> - Kunming's signature dish! Hot broth, rice noodles, and fresh ingredients served separately. Try at <strong>Bridge Rice Noodle Restaurant</strong> near Green Lake.
+            </div>
+            <div class="food-item">
+                <strong>Steam Pot Chicken (汽锅鸡)</strong> - Traditional Yunnan chicken soup cooked in a special clay pot. Rich, flavorful broth with medicinal herbs.
+            </div>
+            <div class="food-item">
+                <strong>Erkuai (饵块)</strong> - Grilled rice cakes, street food favorite. Available at night markets around Nanping Street.
+            </div>
+        </div>
+        
+        <div class="scenic-spot">
+            <h3 style="margin-top: 0;" class="camera-icon">📸 Best Photo Spots - Day 1</h3>
+            <p><strong>Evening City Lights:</strong> Head to Nanping Street pedestrian area for vibrant city night photography and local street life scenes.</p>
+        </div>
     </div>
 
     <!-- Day 2 -->
@@ -583,6 +711,35 @@
                 <div class="tips">
                     <strong>Evening Activity:</strong> Traditional architecture, local food, and shopping
                 </div>
+            </div>
+        </div>
+        
+        <div class="scenic-spot">
+            <h3 style="margin-top: 0;" class="camera-icon">📸 Best Photo Spots - Day 2</h3>
+            <p><strong>🗿 Stone Forest Viewpoints:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Ashima Rock:</strong> The most famous formation - looks like a girl in traditional dress. Golden hour (sunrise/sunset) creates magical lighting!</li>
+                <li><strong>Lion Pavilion (狮子亭):</strong> Highest viewpoint for panoramic photos of the entire limestone forest</li>
+                <li><strong>Sword Peak Pond:</strong> Perfect mirror reflections of karst formations in calm morning water</li>
+            </ul>
+            <p><strong>⛰️ Western Hills Viewpoints:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Dragon Gate (龙门):</strong> Stunning sunset views over Dianchi Lake - bring wide-angle lens!</li>
+                <li><strong>Cable Car Views:</strong> Aerial photography opportunity during 25-minute ride</li>
+                <li><strong>Best Time:</strong> 4:30-6:30 PM for golden hour and sunset over the lake</li>
+            </ul>
+        </div>
+        
+        <div class="food-recommendations">
+            <h3 style="margin-top: 0;">🍜 Food Recommendations - Day 2</h3>
+            <div class="food-item">
+                <strong>Lunch at Stone Forest:</strong> Try local Yi minority grilled meats and potatoes. There are small restaurants near the entrance.
+            </div>
+            <div class="food-item">
+                <strong>Xuanwei Ham (宣威火腿)</strong> - Famous Yunnan cured ham, similar to Spanish jamón. Available at restaurants near Western Hills.
+            </div>
+            <div class="food-item">
+                <strong>Flower Cakes (鲜花饼)</strong> - Yunnan specialty pastries filled with rose petals. Perfect souvenir! Buy at Jiahua Bakery chains.
             </div>
         </div>
     </div>
@@ -621,6 +778,33 @@
                     <strong>Best Time:</strong> Sunset viewing (around 7:30 PM in summer)<br>
                     <strong>Activities:</strong> Lake cruise, photography, romantic atmosphere
                 </div>
+            </div>
+        </div>
+        
+        <div class="scenic-spot">
+            <h3 style="margin-top: 0;" class="camera-icon">📸 Best Photo Spots - Day 3</h3>
+            <p><strong>🌅 Erhai Lake Sunset Spots:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Longkan Pier:</strong> Classic sunset over lake with Cangshan Mountains backdrop - arrive 30 mins before sunset!</li>
+                <li><strong>Dali Ancient City South Gate:</strong> Traditional architecture with mountains in background, especially beautiful at dusk</li>
+                <li><strong>Foreigner Street (洋人街):</strong> Colorful shops, cafes, and traditional Bai architecture for cultural photography</li>
+                <li><strong>Photo Tip:</strong> Bring tripod for long exposure lake shots during blue hour (6:30-7:30 PM)</li>
+            </ul>
+        </div>
+        
+        <div class="food-recommendations">
+            <h3 style="margin-top: 0;">🍜 Must-Try Foods in Dali</h3>
+            <div class="food-item">
+                <strong>Bai Minority Fish (白族酸辣鱼)</strong> - Fresh Erhai Lake fish in sour and spicy broth. Try at restaurants along Renmin Road.
+            </div>
+            <div class="food-item">
+                <strong>Rushan (乳扇)</strong> - Grilled dairy fan, unique Bai ethnic cheese. Street vendors sell it with rose jam - sweet & savory!
+            </div>
+            <div class="food-item">
+                <strong>Xizhou Baba (喜洲粑粑)</strong> - Crispy layered flatbread with sweet or savory filling. Famous from nearby Xizhou Village.
+            </div>
+            <div class="food-item">
+                <strong>Three-Course Tea (三道茶)</strong> - Traditional Bai welcome ceremony: bitter, sweet, and aftertaste tea. Experience at cultural shows.
             </div>
         </div>
     </div>
@@ -670,6 +854,35 @@
                 </div>
             </div>
         </div>
+        
+        <div class="scenic-spot">
+            <h3 style="margin-top: 0;" class="camera-icon">📸 Best Photo Spots - Day 4</h3>
+            <p><strong>🏞️ Erhai Lake Scenic Route (Most Instagram-worthy!):</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Shuanglang Overlook:</strong> THE iconic Erhai photo spot - white tables, glass balls, and boat props. Arrive early (8-9 AM) to avoid crowds!</li>
+                <li><strong>Xiaoputuo Island:</strong> Tiny island temple reflection shots - best in early morning calm water (6:30-7:30 AM)</li>
+                <li><strong>Haidong Highway Viewpoint:</strong> Elevated coastal road with sweeping lake views - perfect for panoramic shots</li>
+                <li><strong>White Table Photo Spots:</strong> Multiple locations along east shore with props and scenic setups (small fee 10-20 RMB)</li>
+            </ul>
+            <p><strong>🏛️ Shaxi Ancient Town:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Sideng Square:</strong> Ancient market square at golden hour (5-6 PM) - traditional Bai architecture and red lanterns</li>
+                <li><strong>Old Theatre Stage:</strong> 600-year-old wooden theater, stunning architecture detail shots</li>
+            </ul>
+        </div>
+        
+        <div class="food-recommendations">
+            <h3 style="margin-top: 0;">🍜 Food Recommendations - Day 4</h3>
+            <div class="food-item">
+                <strong>Lake Fish BBQ:</strong> Grilled fresh Erhai fish at Shuanglang restaurants. Choose live fish and watch it cooked with local spices!
+            </div>
+            <div class="food-item">
+                <strong>Dali Yogurt (大理酸奶)</strong> - Thick, tangy homemade yogurt in clay pots. Street vendors everywhere - only 5-10 RMB!
+            </div>
+            <div class="food-item">
+                <strong>Shaxi Black Truffle:</strong> If visiting Shaxi, try dishes with local black truffles (cheaper than European truffles, equally delicious!)
+            </div>
+        </div>
     </div>
 
     <!-- Day 5 -->
@@ -715,6 +928,42 @@
                     <strong>UNESCO Site:</strong> Naxi minority culture<br>
                     <strong>Evening:</strong> Beautiful when lit up at night
                 </div>
+            </div>
+        </div>
+        
+        <div class="scenic-spot">
+            <h3 style="margin-top: 0;" class="camera-icon">📸 Best Photo Spots - Day 5 (TOP PRIORITY!)</h3>
+            <p><strong>🏔️ Jade Dragon Snow Mountain - EPIC Scenery:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Glacier Park Cable Car Top (4,680m):</strong> BREATHTAKING snow mountain views! Go early (7-8 AM) before clouds roll in. Bring oxygen canister!</li>
+                <li><strong>Blue Moon Valley Lakes:</strong> STUNNING turquoise glacier water - Instagram paradise! Best photos at noon when sun illuminates the blue color</li>
+                <li><strong>White Water River:</strong> Cascading blue-white water with mountain backdrop - use fast shutter speed for waterfall effects</li>
+                <li><strong>Photo Tip:</strong> Dress warmly but in bright colors (red, yellow) to contrast with white snow and blue water!</li>
+            </ul>
+            <p><strong>🏛️ Lijiang Old Town Evening:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Square Street (四方街):</strong> Central square with traditional Naxi dancing (7-8 PM), red lanterns everywhere</li>
+                <li><strong>Lion Rock Hill:</strong> Climb up for sunset panoramic view of entire Old Town - arrive by 5:30 PM</li>
+                <li><strong>Waterwheel Plaza:</strong> Iconic entrance photo spot, especially beautiful at night with lights</li>
+            </ul>
+        </div>
+        
+        <div class="food-recommendations">
+            <h3 style="margin-top: 0;">🍜 Must-Try Foods in Lijiang</h3>
+            <div class="food-item">
+                <strong>Naxi Baba (纳西粑粑)</strong> - Thick flatbread, crispy outside, soft inside. Sweet or salty versions. Breakfast favorite!
+            </div>
+            <div class="food-item">
+                <strong>Yak Meat Hot Pot:</strong> Rich, flavorful yak meat with vegetables. High-protein, low-fat. Try at restaurants in Old Town.
+            </div>
+            <div class="food-item">
+                <strong>Naxi Grilled Fish (纳西烤鱼)</strong> - Whole fish covered in chili and herbs, grilled to perfection. Spicy and aromatic!
+            </div>
+            <div class="food-item">
+                <strong>Lijiang Snacks:</strong> Try chicken bean jelly (鸡豆凉粉) - unique local tofu-like snack, refreshing and slightly sweet.
+            </div>
+            <div class="food-item">
+                <strong>⚠️ Altitude Warning:</strong> At 4,680m, eat light lunch before mountain trip. Avoid heavy meals. Stay hydrated!
             </div>
         </div>
     </div>
@@ -764,6 +1013,39 @@
                 </div>
             </div>
         </div>
+        
+        <div class="scenic-spot">
+            <h3 style="margin-top: 0;" class="camera-icon">📸 Best Photo Spots - Day 6</h3>
+            <p><strong>🐉 Black Dragon Pool Park - ICONIC VIEW:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Moon Embracing Pavilion:</strong> THE most famous Lijiang photo - red pavilion with Jade Dragon Snow Mountain reflection in pool! Best time: 7-9 AM (clear skies, fewer crowds)</li>
+                <li><strong>Five Phoenix Tower:</strong> Traditional architecture with mountain backdrop - climb up for elevated views</li>
+                <li><strong>Photo Tip:</strong> Bring ND filter for long exposure water smoothness. Check weather - need clear skies for mountain visibility!</li>
+            </ul>
+            <p><strong>🦅 Lashihai Wetland:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Horseback Photos:</strong> Scenic Tea Horse Road riding experience - great for action shots with mountain scenery</li>
+                <li><strong>Wetland Sunset:</strong> Beautiful golden hour light over grasslands (5:30-6:30 PM)</li>
+            </ul>
+            <p><strong>🏘️ Shuhe Ancient Town:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Qinglong Bridge:</strong> 400-year-old bridge, less touristy than Lijiang - perfect for quiet contemplative shots</li>
+                <li><strong>Evening Light:</strong> Softer atmosphere than busy Lijiang, great for street photography</li>
+            </ul>
+        </div>
+        
+        <div class="food-recommendations">
+            <h3 style="margin-top: 0;">🍜 Food Recommendations - Day 6</h3>
+            <div class="food-item">
+                <strong>Preserved Ribs Hot Pot (腊排骨火锅)</strong> - Lijiang specialty! Cured pork ribs simmered with local herbs. Try at Xiangshan Market area.
+            </div>
+            <div class="food-item">
+                <strong>Wild Mushroom Hot Pot:</strong> Yunnan is mushroom paradise! 20+ varieties in one pot. Seasonal (June-September best time).
+            </div>
+            <div class="food-item">
+                <strong>Shuhe Ancient Town Cafes:</strong> Great Western-style cafes with mountain views. Perfect for afternoon coffee break!
+            </div>
+        </div>
     </div>
 
     <!-- Day 7 -->
@@ -811,6 +1093,47 @@
                 </div>
             </div>
         </div>
+        
+        <div class="scenic-spot">
+            <h3 style="margin-top: 0;" class="camera-icon">📸 Best Photo Spots - Day 7 (EPIC JOURNEY!)</h3>
+            <p><strong>🏔️ Tiger Leaping Gorge - MUST-SEE NATURAL WONDER:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Upper Gorge Viewpoint:</strong> DRAMATIC! One of world's deepest gorges. Raging Jinsha River 3,900m below snow peaks! Best time: 10 AM-2 PM for good lighting</li>
+                <li><strong>Tiger Leaping Stone:</strong> Legendary rock in middle of torrent - incredible power of nature shots</li>
+                <li><strong>Middle Trail Viewpoints:</strong> If hiking, multiple stunning overlooks. Bring wide-angle lens (16-35mm ideal)</li>
+                <li><strong>Safety:</strong> Stay on marked paths - gorge is dangerous! Worth the careful trek for photos</li>
+            </ul>
+            <p><strong>🌊 First Bend of Yangtze River:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Observation Platform:</strong> Dramatic U-shaped river bend - best viewed from elevated viewpoint (small entrance fee)</li>
+                <li><strong>Geological Wonder:</strong> Great for landscape photography, especially with morning side-lighting</li>
+            </ul>
+            <p><strong>🏯 Songzanlin Monastery:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Front Lake Reflection:</strong> Classic shot - monastery reflected in Lamu Yangcuo Lake. Sunrise (6:30-7:30 AM) = GOLDEN!</li>
+                <li><strong>Main Hall Viewpoint:</strong> Climb to top for panoramic view of monastery complex - mini Potala Palace!</li>
+                <li><strong>Photo Tip:</strong> Respect prayer areas - ask permission before photographing monks</li>
+            </ul>
+        </div>
+        
+        <div class="food-recommendations">
+            <h3 style="margin-top: 0;">🍜 Food Recommendations - Day 7</h3>
+            <div class="food-item">
+                <strong>Tibetan Butter Tea (酥油茶)</strong> - Traditional high-altitude drink. Salty, rich, helps with altitude! Try at Dukezong tea houses.
+            </div>
+            <div class="food-item">
+                <strong>Yak Meat Dishes:</strong> Grilled yak skewers, yak burgers at Dukezong Ancient Town. Leaner than beef, unique flavor!
+            </div>
+            <div class="food-item">
+                <strong>Zanba (糌粑)</strong> - Roasted barley flour, Tibetan staple food. Mix with butter tea - authentic experience!
+            </div>
+            <div class="food-item">
+                <strong>Lunch at Tiger Leaping Gorge:</strong> Simple local restaurants at trailhead - hot noodles perfect after hiking!
+            </div>
+            <div class="food-item">
+                <strong>⚠️ Altitude Note:</strong> Shangri-La is 3,200m elevation. Eat light, avoid alcohol first day, drink lots of water!
+            </div>
+        </div>
     </div>
 
     <!-- Day 8 -->
@@ -849,6 +1172,43 @@
                 </div>
             </div>
         </div>
+        
+        <div class="scenic-spot">
+            <h3 style="margin-top: 0;" class="camera-icon">📸 Best Photo Spots - Day 8 (PRISTINE NATURE!)</h3>
+            <p><strong>🌲 Pudacuo National Park - PARADISE:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Shudu Lake (属都湖):</strong> STUNNING alpine lake surrounded by virgin forest! Best photos: early morning (7-9 AM) for mirror reflections and mist</li>
+                <li><strong>Bita Lake (碧塔海):</strong> Crystal clear high-altitude lake with floating meadows - looks unreal! June-September: wildflower paradise</li>
+                <li><strong>Forest Boardwalk:</strong> 3.3km wooden path through ancient forest - magical morning light filtering through trees</li>
+                <li><strong>Photo Tips:</strong> Bring polarizing filter for water reflections. Altitude 3,500-4,100m - take it slow! Wildlife: deer, squirrels - be patient</li>
+            </ul>
+            <p><strong>🌾 Napa Lake Grassland:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Seasonal Wonder:</strong> Summer = grassland with wildflowers, Winter = frozen lake with black-necked cranes!</li>
+                <li><strong>360° Views:</strong> Vast open grassland with prayer flags - panoramic shots of Tibetan plateau</li>
+                <li><strong>Golden Hour Magic:</strong> Sunset (6:30-7:00 PM) creates incredible golden light on grasslands</li>
+                <li><strong>Black-Necked Cranes:</strong> November-March, endangered species migration - bird photography opportunity!</li>
+            </ul>
+        </div>
+        
+        <div class="food-recommendations">
+            <h3 style="margin-top: 0;">🍜 Food Recommendations - Day 8</h3>
+            <div class="food-item">
+                <strong>Yak Meat Hot Pot (牦牛火锅)</strong> - Perfect after cold national park visit! Rich, warming, high-protein. Available in Shangri-La restaurants.
+            </div>
+            <div class="food-item">
+                <strong>Highland Barley Wine (青稞酒)</strong> - Traditional Tibetan alcohol. Sweet, low alcohol content. Try at cultural dinner show!
+            </div>
+            <div class="food-item">
+                <strong>Tibetan Yogurt (藏式酸奶)</strong> - Thick, creamy, often with honey. Healthy high-altitude snack!
+            </div>
+            <div class="food-item">
+                <strong>Pack Lunch for Park:</strong> Buy food before entering Pudacuo - limited options inside. Bring energy bars, water, and warm tea!
+            </div>
+            <div class="food-item">
+                <strong>Traditional Tibetan Feast:</strong> Evening cultural show includes khata (scarf) welcome, barley wine toasting, and traditional songs. Authentic cultural experience!
+            </div>
+        </div>
     </div>
 
     <!-- Day 9 -->
@@ -877,6 +1237,28 @@
                     <strong>Souvenirs:</strong> Local crafts, tea, ethnic minority items
                 </div>
             </div>
+        </div>
+        
+        <div class="food-recommendations">
+            <h3 style="margin-top: 0;">🍜 Food Recommendations - Day 9</h3>
+            <div class="food-item">
+                <strong>Last Chance for Crossing Bridge Noodles!</strong> - If you haven't tried it enough, Nanping Street has several excellent locations.
+            </div>
+            <div class="food-item">
+                <strong>Yunnan Coffee:</strong> Yunnan grows excellent arabica coffee! Try at local cafes - unique Chinese coffee culture.
+            </div>
+            <div class="food-item">
+                <strong>Night Market Snacks:</strong> Explore Nanping Street night market - grilled squid, stinky tofu, fresh fruit, local desserts.
+            </div>
+        </div>
+        
+        <div class="scenic-spot">
+            <h3 style="margin-top: 0;" class="camera-icon">📸 Best Photo Spots - Day 9</h3>
+            <p><strong>🛍️ Nanping Pedestrian Street:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Evening Street Photography:</strong> Colorful lights, busy crowds, street food vendors - vibrant urban China scenes</li>
+                <li><strong>Best Time:</strong> 7-9 PM when all lights are on and street is busiest</li>
+            </ul>
         </div>
     </div>
 
@@ -914,6 +1296,44 @@
                     <strong>Airport Transfer:</strong> Allow 1 hour from city center<br>
                     <strong>Check-in:</strong> Arrive 2-3 hours before international flight
                 </div>
+            </div>
+        </div>
+        
+        <div class="scenic-spot">
+            <h3 style="margin-top: 0;" class="camera-icon">📸 Best Photo Spots - Day 10</h3>
+            <p><strong>🦢 Cuihu Park (Green Lake) - MORNING MUST!</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Siberian Seagulls (Winter Special!):</strong> November-March, thousands of seagulls migrate here! Best photos: 8-10 AM when most active</li>
+                <li><strong>Local Life Photography:</strong> Tai Chi practitioners, traditional musicians, dancers - authentic Chinese park culture</li>
+                <li><strong>Lotus Season:</strong> June-September, beautiful lotus flowers cover the lake</li>
+                <li><strong>Photo Tip:</strong> Bring bread to feed seagulls (buy from vendors) - creates amazing action shots!</li>
+            </ul>
+            <p><strong>🏛️ Yunnan University Campus:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li><strong>Adjacent to Green Lake:</strong> Beautiful old campus with traditional Chinese architecture - worth a quick walk if time permits</li>
+            </ul>
+        </div>
+        
+        <div class="food-recommendations">
+            <h3 style="margin-top: 0;">🍜 Final Day Food & Souvenirs</h3>
+            <div class="food-item">
+                <strong>Breakfast near Green Lake:</strong> Local breakfast spots with rice noodles, soy milk, fried dough sticks (油条) - one last authentic meal!
+            </div>
+            <div class="food-item">
+                <strong>🎁 BEST SOUVENIRS TO BUY:</strong>
+                <ul style="margin: 5px 0; padding-left: 20px;">
+                    <li><strong>Pu'er Tea:</strong> Famous Yunnan aged tea - buy at reputable shops, not tourist traps!</li>
+                    <li><strong>Flower Cakes (鲜花饼):</strong> Rose petal pastries - lightweight, delicious gifts. Jiahua brand recommended</li>
+                    <li><strong>Yunnan Coffee Beans:</strong> Quality arabica coffee, much cheaper than abroad</li>
+                    <li><strong>Ethnic Minority Crafts:</strong> Embroidery, silver jewelry, batik fabric from Bai/Naxi/Tibetan cultures</li>
+                    <li><strong>Xuanwei Ham:</strong> If you can transport it (vacuum-packed available)</li>
+                </ul>
+            </div>
+            <div class="food-item">
+                <strong>Luosiwan International Trade City:</strong> Wholesale market - best prices but requires bargaining! Go early morning (8-9 AM) for freshest products.
+            </div>
+            <div class="food-item">
+                <strong>Airport Food:</strong> Kunming airport has decent noodle shops - one last bowl of Crossing Bridge Noodles before departure!
             </div>
         </div>
     </div>
