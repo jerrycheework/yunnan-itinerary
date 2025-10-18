@@ -166,6 +166,50 @@
         .camera-icon {
             font-size: 1.2em;
         }
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .image-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .image-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 15px 10px 10px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3em;
+        }
         @keyframes slideIn {
             from {
                 transform: translateY(-50px);
@@ -639,6 +683,22 @@
             <h2>Day 1: Arrival in Kunming</h2>
             <p>Airport pickup and hotel check-in</p>
         </div>
+        
+        <div class="image-gallery">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80" alt="Kunming Airport">
+                <div class="image-caption">Kunming Changshui Airport</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&q=80" alt="Kunming City">
+                <div class="image-caption">Kunming City Center</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&q=80" alt="Night Street">
+                <div class="image-caption">Nanping Street at Night</div>
+            </div>
+        </div>
+        
         <div id="map1" class="interactive-map"></div>
         <div class="locations-grid">
             <div class="location-card">
@@ -684,6 +744,26 @@
             <h2>Day 2: Kunming Exploration</h2>
             <p>Stone Forest and Western Hills adventure</p>
         </div>
+        
+        <div class="image-gallery">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Stone Forest">
+                <div class="image-caption">Stone Forest UNESCO Site</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Western Hills">
+                <div class="image-caption">Western Hills Dragon Gate</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Dianchi Lake">
+                <div class="image-caption">Dianchi Lake Sunset</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&q=80" alt="Old Street">
+                <div class="image-caption">Kunming Old Street</div>
+            </div>
+        </div>
+        
         <div id="map2" class="interactive-map"></div>
         <div class="locations-grid">
             <div class="location-card">
@@ -750,6 +830,26 @@
             <h2>Day 3: Kunming to Dali</h2>
             <p>High-speed train journey and Dali exploration</p>
         </div>
+        
+        <div class="image-gallery">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&q=80" alt="High-Speed Train">
+                <div class="image-caption">High-Speed Train to Dali</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&q=80" alt="Dali Old Town">
+                <div class="image-caption">Dali Old Town</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Erhai Lake">
+                <div class="image-caption">Erhai Lake Sunset</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Cangshan Mountains">
+                <div class="image-caption">Cangshan Mountains</div>
+            </div>
+        </div>
+        
         <div id="map3" class="interactive-map"></div>
         <div class="locations-grid">
             <div class="location-card">
@@ -815,6 +915,26 @@
             <h2>Day 4: Dali Full Day & Transfer to Lijiang</h2>
             <p>Erhai Lake tour and ancient towns exploration</p>
         </div>
+        
+        <div class="image-gallery">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Shuanglang">
+                <div class="image-caption">Shuanglang Instagram Spot</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="Xiaoputuo Island">
+                <div class="image-caption">Xiaoputuo Island</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&q=80" alt="Shaxi Ancient Town">
+                <div class="image-caption">Shaxi Ancient Town</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1571333250630-f0230c320b6d?w=800&q=80" alt="Cycling">
+                <div class="image-caption">Cycling Around Erhai Lake</div>
+            </div>
+        </div>
+        
         <div id="map4" class="interactive-map"></div>
         <div class="locations-grid">
             <div class="location-card">
@@ -891,6 +1011,26 @@
             <h2>Day 5: Lijiang Highlights</h2>
             <p>Jade Dragon Snow Mountain and cultural shows</p>
         </div>
+        
+        <div class="image-gallery">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Jade Dragon Snow Mountain">
+                <div class="image-caption">Jade Dragon Snow Mountain</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="Blue Moon Valley">
+                <div class="image-caption">Blue Moon Valley</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Impression Show">
+                <div class="image-caption">Impression Lijiang Show</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&q=80" alt="Lijiang Old Town">
+                <div class="image-caption">Lijiang Old Town</div>
+            </div>
+        </div>
+        
         <div id="map5" class="interactive-map"></div>
         <div class="locations-grid">
             <div class="location-card">
@@ -974,6 +1114,26 @@
             <h2>Day 6: Lijiang Cultural Day</h2>
             <p>Wetlands, ancient towns, and evening entertainment</p>
         </div>
+        
+        <div class="image-gallery">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="Black Dragon Pool">
+                <div class="image-caption">Black Dragon Pool Reflection</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80" alt="Lashihai Wetland">
+                <div class="image-caption">Lashihai Wetland</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&q=80" alt="Shuhe Ancient Town">
+                <div class="image-caption">Shuhe Ancient Town</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&q=80" alt="Eternal Love Show">
+                <div class="image-caption">Eternal Love Show</div>
+            </div>
+        </div>
+        
         <div id="map6" class="interactive-map"></div>
         <div class="locations-grid">
             <div class="location-card">
@@ -1054,6 +1214,26 @@
             <h2>Day 7: Journey to Shangri-La</h2>
             <p>Scenic drive with Yangtze River and Tiger Leaping Gorge</p>
         </div>
+        
+        <div class="image-gallery">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" alt="Tiger Leaping Gorge">
+                <div class="image-caption">Tiger Leaping Gorge</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="Yangtze River">
+                <div class="image-caption">First Bend Yangtze River</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&q=80" alt="Songzanlin Monastery">
+                <div class="image-caption">Songzanlin Monastery</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1548919973-5cef591cdbc9?w=800&q=80" alt="Dukezong Ancient Town">
+                <div class="image-caption">Dukezong Ancient Town</div>
+            </div>
+        </div>
+        
         <div id="map7" class="interactive-map"></div>
         <div class="locations-grid">
             <div class="location-card">
@@ -1142,6 +1322,26 @@
             <h2>Day 8: Shangri-La Nature</h2>
             <p>National park and grasslands exploration</p>
         </div>
+        
+        <div class="image-gallery">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80" alt="Pudacuo National Park">
+                <div class="image-caption">Pudacuo National Park</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="Shudu Lake">
+                <div class="image-caption">Shudu Lake</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80" alt="Napa Lake Grassland">
+                <div class="image-caption">Napa Lake Grassland</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80" alt="Tibetan Feast">
+                <div class="image-caption">Tibetan Cultural Feast</div>
+            </div>
+        </div>
+        
         <div id="map8" class="interactive-map"></div>
         <div class="locations-grid">
             <div class="location-card">
@@ -1217,6 +1417,22 @@
             <h2>Day 9: Return to Kunming</h2>
             <p>High-speed train back and city exploration</p>
         </div>
+        
+        <div class="image-gallery">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&q=80" alt="Train Journey">
+                <div class="image-caption">Return Train Journey</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1555993539-1732b0258235?w=800&q=80" alt="Shopping Street">
+                <div class="image-caption">Nanping Street Shopping</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1555243896-c709bfa0b564?w=800&q=80" alt="Night Market">
+                <div class="image-caption">Night Market</div>
+            </div>
+        </div>
+        
         <div id="map9" class="interactive-map"></div>
         <div class="locations-grid">
             <div class="location-card">
@@ -1268,6 +1484,26 @@
             <h2>Day 10: Final Day & Departure</h2>
             <p>Last-minute sightseeing and shopping before flight</p>
         </div>
+        
+        <div class="image-gallery">
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80" alt="Seagulls at Park">
+                <div class="image-caption">Cuihu Park Seagulls</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80" alt="Trade City">
+                <div class="image-caption">Luosiwan Trade City</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800&q=80" alt="Souvenirs">
+                <div class="image-caption">Souvenir Shopping</div>
+            </div>
+            <div class="image-card">
+                <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80" alt="Airport Departure">
+                <div class="image-caption">Airport Departure</div>
+            </div>
+        </div>
+        
         <div id="map10" class="interactive-map"></div>
         <div class="locations-grid">
             <div class="location-card">
@@ -1336,6 +1572,14 @@
                 <strong>Airport Food:</strong> Kunming airport has decent noodle shops - one last bowl of Crossing Bridge Noodles before departure!
             </div>
         </div>
+    </div>
+
+    <!-- Image Attribution Notice -->
+    <div style="max-width: 1200px; margin: 20px auto; background: #f8f9fa; border-radius: 10px; padding: 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+        <p style="margin: 0; color: #666; font-size: 0.9em;">
+            📸 Images provided by <a href="https://unsplash.com" target="_blank" rel="noopener" style="color: #667eea; text-decoration: none; font-weight: bold;">Unsplash</a> - 
+            Beautiful free images & photos that you can download and use for any project. Better than any royalty free or stock photos.
+        </p>
     </div>
 
     <!-- Pricing & Inclusions Section -->
